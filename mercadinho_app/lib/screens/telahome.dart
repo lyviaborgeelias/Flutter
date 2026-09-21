@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:mercadinho_app/components/minha_app_bar.dart';
 import 'package:mercadinho_app/components/produtos.dart';
 
 class TelaHome extends StatefulWidget {
@@ -11,25 +13,25 @@ class TelaHome extends StatefulWidget {
 }
 
 class _TelaHomeState extends State<TelaHome> {
-  //Aqui voce coda a sua lógica
+  //lógica
   List produtos = [];
+  
   @override
   void initState(){
-    super.initState();
     fazerGet();
   }
 
   void fazerGet() async{
-    //final é o tipo de variavel que começa nulo e depois recebe um valor, ideal para comunicação com API
+    //final é o tipo de variável que começa nulo e depois recebe um valor, ideal para comunicação com API
     final respostaServidor = await http.get(Uri.parse("https://api-mercadinho-gq9r.onrender.com/produtos"));
     if(respostaServidor.statusCode == 200){
       final dados = jsonDecode(respostaServidor.body);
-      setState((){
+      setState(() {
         produtos = dados;
       });
     }else{
-      if(mounted){ //Mounted verifica se a página foi montada antes de aparecer uma mensagem de falha.
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Falha na API!")));
+      if(mounted){ //Mounted verifica se a página foi montada antes de aparecer uma mensagem de falha
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Falha na API!")));
       }
     }
   }
@@ -37,15 +39,13 @@ class _TelaHomeState extends State<TelaHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tela Home"), backgroundColor: Colors.orange, centerTitle: true),
-      body: produtos.isEmpty? Center(child: Text("Carregando produtos.....")):
+      appBar: MinhaAppBar(),
+      body: produtos.isEmpty ? Center(child: Text("Carregando produtos..."),): 
       GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       children: [
         for(final produto in produtos)
         ProdutosCard(nome: produto["nome"], preco: produto["preco"], urlImagem: produto["imagem"])
-      ],
-      )
-      
+      ],),
     );
   }
 }
