@@ -22,6 +22,7 @@ class _TelaLoginState extends State<TelaLogin> {
         if(usuario["email"] == emailDigitado.text && usuario["senha"] == senhaDigitada.text){
           usuarioId = usuario["id"];
           usuarioEmail = usuario["email"];
+          statusAdmin = usuario["admin"];
           if(mounted){
             Navigator.pushNamed(context, "/navbar");
           }
@@ -50,3 +51,4 @@ class _TelaLoginState extends State<TelaLogin> {
 
 dynamic usuarioId;
 dynamic usuarioEmail;
+bool? statusAdmin;

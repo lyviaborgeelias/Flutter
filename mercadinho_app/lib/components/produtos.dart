@@ -17,7 +17,7 @@ class ProdutosCard extends StatelessWidget {
         Text("R\$ ${preco.toStringAsFixed(2)}"),
         IconButton(onPressed: (){
           produtosCarrinho.add(ProdutosCard(nome: nome, preco: preco, urlImagem: urlImagem));
-        }, icon:Icon(Icons.add_a_photo_rounded))
+        }, icon:Icon(Icons.add_shopping_cart))
       ],),
     );
   }
