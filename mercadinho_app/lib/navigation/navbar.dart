@@ -37,8 +37,10 @@ class _NavBarState extends State<NavBar> {
       
       currentIndex: indexAtual,
         onTap: mudarIndex,
-        backgroundColor: Colors.orange,
-        selectedItemColor: Colors.white,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
       ),
     );
 

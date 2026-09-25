@@ -50,17 +50,21 @@ class _TelaPerfilState extends State<TelaPerfil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tela Perfil"), automaticallyImplyLeading: false),
-      body: Center(child: 
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 30,
-        children: [
-        Icon(Icons.person, size: 120),
-        InputLogin(fofoqueira: emailDigitado, placeholder: "Digite o email"),
-        TextButton(onPressed: (){fazerPatch();}, child: Text("Alterar")),
-        TextButton(onPressed: (){finalizarSessao();}, child: Text("Sair")),
-      ],),)
+      appBar: AppBar(title: const Text("Meu perfil"), automaticallyImplyLeading: false),
+      body: SingleChildScrollView(child: Padding(padding: const EdgeInsets.all(20), child: Column(children: [
+        const SizedBox(height: 26),
+        const CircleAvatar(radius: 52, backgroundColor: Colors.orange, child: Icon(Icons.person, size: 58, color: Colors.white)),
+        const SizedBox(height: 14),
+        const Text("Seus dados", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 5),
+        const Text("Mantenha seu email atualizado", style: TextStyle(color: Colors.grey)),
+        const SizedBox(height: 24),
+        InputLogin(fofoqueira: emailDigitado, placeholder: "Digite o email", tipo: TextInputType.emailAddress),
+        const SizedBox(height: 8),
+        SizedBox(width: double.infinity, child: ElevatedButton.icon(onPressed: fazerPatch, icon: const Icon(Icons.save_outlined), label: const Text("Salvar alterações"))),
+        const SizedBox(height: 12),
+        SizedBox(width: double.infinity, child: OutlinedButton.icon(onPressed: finalizarSessao, icon: const Icon(Icons.logout), label: const Text("Sair da conta"))),
+      ])))
     );
   }
 }

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
 class InputLogin extends StatelessWidget {
-  TextEditingController fofoqueira;
-  String placeholder;
-  TextInputType? tipo;
-  bool? senha;
-  InputLogin({super.key, required this.fofoqueira, required this.placeholder, this.tipo = TextInputType.text, this.senha = false});
+  final TextEditingController fofoqueira;
+  final String placeholder;
+  final TextInputType? tipo;
+  final bool senha;
+  const InputLogin({super.key, required this.fofoqueira, required this.placeholder, this.tipo = TextInputType.text, this.senha = false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
       child: TextField(
         controller: fofoqueira,
         keyboardType: tipo,
-        obscureText: senha!,
+        obscureText: senha,
         decoration: InputDecoration(
-          filled: true, //esta preenchido?
-          fillColor: Colors.white, //cor de preenchimento
+          filled: true,
+          fillColor: Colors.white,
           hintText: placeholder,
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none, //Tire a espessura da borda
-          ) 
+          prefixIcon: Icon(senha ? Icons.lock_outline : Icons.email_outlined, color: Colors.orange),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: Colors.orange, width: 2)),
         ),
       ),
     );

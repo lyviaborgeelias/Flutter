@@ -23,12 +23,17 @@ class _TelaGestaoState extends State<TelaGestao> {
   }
 
   void fazerPost() async {
+    final preco = double.tryParse(precoDigitado.text.replaceAll(',', '.'));
+    if (nomeDigitado.text.trim().isEmpty || urlDigitado.text.trim().isEmpty || preco == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Preencha nome, imagem e um preço válido"), backgroundColor: Colors.redAccent));
+      return;
+    }
     final respostaServidor = await http.post(Uri.parse("https://api-mercadinho-gq9r.onrender.com/produtos"), 
     headers: {"Content-Type": "application/json"},
     body: jsonEncode({
       "nome": nomeDigitado.text,
       "imagem": urlDigitado.text,
-      "preco": double.parse(precoDigitado.text),
+      "preco": preco,
     })
     );  
 
@@ -37,7 +42,10 @@ class _TelaGestaoState extends State<TelaGestao> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Produto criado com sucesso!"))
           );
-          Navigator.pushNamed(context, "/navbar");
+          nomeDigitado.clear();
+          urlDigitado.clear();
+          precoDigitado.clear();
+          fazerGet();
       }else{
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Erro ao criar produto, tente novamente!", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,)
@@ -80,22 +88,30 @@ class _TelaGestaoState extends State<TelaGestao> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tela de Gestão")),
+      appBar: AppBar(title: const Text("Gestão de produtos")),
       body: ListView(
+        padding: const EdgeInsets.all(18),
         children: [
-          TextField(controller: nomeDigitado, decoration: InputDecoration(hintText: "Insira o nome do produto"),),
-          TextField(controller: urlDigitado, decoration: InputDecoration(hintText: "Insira a URL do produto"),),
-          TextField(controller: precoDigitado, decoration: InputDecoration(hintText: "Insira o preço do produto"),),
-          TextButton(onPressed: fazerPost, child: Text("Salvar")),
-          SizedBox(height: 100),
+          const Text("Novo produto", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 14),
+          TextField(controller: nomeDigitado, decoration: const InputDecoration(labelText: "Nome do produto", prefixIcon: Icon(Icons.shopping_bag_outlined))),
+          const SizedBox(height: 10),
+          TextField(controller: urlDigitado, decoration: const InputDecoration(labelText: "URL da imagem", prefixIcon: Icon(Icons.image_outlined))),
+          const SizedBox(height: 10),
+          TextField(controller: precoDigitado, keyboardType: const TextInputType.numberWithOptions(decimal: true), decoration: const InputDecoration(labelText: "Preço", prefixIcon: Icon(Icons.attach_money))),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: ElevatedButton.icon(onPressed: fazerPost, icon: const Icon(Icons.add), label: const Text("Cadastrar produto"))),
+          const SizedBox(height: 28),
+          const Text("Produtos cadastrados", style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
           Divider(indent: 15, endIndent: 15),
           for(final produto in listaProdutos)
-          ListTile(
-            title: Text(produto["nome"]),
-            subtitle: Text(produto["preco"].toStringAsFixed(2)),
+          Card(child: ListTile(
+            leading: const CircleAvatar(backgroundColor: Color(0xFFFFE0B2), child: Icon(Icons.shopping_bag, color: Colors.orange)),
+            title: Text(produto["nome"], style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text("R\$ ${(produto["preco"] as num).toDouble().toStringAsFixed(2)}"),
             trailing: IconButton(onPressed: ()=> fazerDelete(produto["id"]), icon: Icon(Icons.delete)),
-            
-          )
+          ))
         ],
       ),
     );

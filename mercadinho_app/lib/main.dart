@@ -16,6 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        scaffoldBackgroundColor: const Color(0xFFFFFBF5),
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.orange, foregroundColor: Colors.white, centerTitle: true),
+        elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14))),
+        cardTheme: const CardThemeData(color: Colors.white, surfaceTintColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16)))),
+      ),
       initialRoute: "/",
       routes: {
         "/": (context) => SplashScreen(),
@@ -32,6 +40,7 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => NavBar());
           }
         }
+        return null;
       },
     );
   }
