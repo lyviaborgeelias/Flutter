@@ -64,7 +64,7 @@ class _TelaLoginState extends State<TelaLogin> {
                   Container(
                     padding: const EdgeInsets.all(18),
                     decoration: const BoxDecoration(
-                      color: Colors.orange,
+                      color: Color(0xFF19734F),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(

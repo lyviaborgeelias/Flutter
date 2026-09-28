@@ -12,18 +12,18 @@ class TelaCarrinho extends StatefulWidget {
 }
 
 class _TelaCarrinhoState extends State<TelaCarrinho> {
-  final Map<ProdutosCard, int> quantidades = {};
-
-  int quantidadeDoProduto(ProdutosCard produto) => quantidades[produto] ?? 1;
+  int quantidadeDoProduto(ProdutosCard produto) => quantidadesCarrinho[produto] ?? 1;
 
   void aumentar(ProdutosCard produto) {
-    setState(() => quantidades[produto] = quantidadeDoProduto(produto) + 1);
+    setState(() => quantidadesCarrinho[produto] = quantidadeDoProduto(produto) + 1);
+    atualizarCarrinho();
   }
 
   void diminuir(ProdutosCard produto) {
     final quantidadeAtual = quantidadeDoProduto(produto);
     if (quantidadeAtual == 1) return;
-    setState(() => quantidades[produto] = quantidadeAtual - 1);
+    setState(() => quantidadesCarrinho[produto] = quantidadeAtual - 1);
+    atualizarCarrinho();
   }
 
   double somarTotal() {
@@ -58,8 +58,9 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
         ).showSnackBar(SnackBar(content: Text("Dado criado com sucesso")));
         setState(() {
           produtosCarrinho.clear();
-          quantidades.clear();
+          quantidadesCarrinho.clear();
         });
+        atualizarCarrinho();
       }
     } else {
       if (mounted) {
@@ -86,7 +87,7 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                   Icon(
                     Icons.shopping_cart_outlined,
                     size: 76,
-                    color: Colors.orange,
+                    color: Color(0xFF19734F),
                   ),
                   SizedBox(height: 14),
                   Text(
@@ -143,7 +144,7 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                                     Text(
                                       "R\$ ${produto.preco.toStringAsFixed(2)}",
                                       style: const TextStyle(
-                                        color: Colors.orange,
+                                        color: Color(0xFF19734F),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -184,7 +185,8 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                               IconButton(
                                 onPressed: () => setState(() {
                                   produtosCarrinho.removeAt(index);
-                                  quantidades.remove(produto);
+                                  quantidadesCarrinho.remove(produto);
+                                  atualizarCarrinho();
                                 }),
                                 icon: const Icon(
                                   Icons.delete_outline,
@@ -223,7 +225,7 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                             style: const TextStyle(
                               fontSize: 21,
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange,
+                              color: Color(0xFF19734F),
                             ),
                           ),
                         ],
@@ -247,3 +249,13 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
 }
 
 List<ProdutosCard> produtosCarrinho = [];
+final Map<ProdutosCard, int> quantidadesCarrinho = {};
+final ValueNotifier<int> carrinhoAtualizado = ValueNotifier<int>(0);
+
+void atualizarCarrinho() {
+  carrinhoAtualizado.value++;
+}
+
+int quantidadeTotalCarrinho() {
+  return produtosCarrinho.fold<int>(0, (total, produto) => total + (quantidadesCarrinho[produto] ?? 1));
+}

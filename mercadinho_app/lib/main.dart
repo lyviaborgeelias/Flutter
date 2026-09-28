@@ -18,11 +18,27 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF19734F)),
         scaffoldBackgroundColor: const Color(0xFFFFFBF5),
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.orange, foregroundColor: Colors.white, centerTitle: true),
-        elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14))),
-        cardTheme: const CardThemeData(color: Colors.white, surfaceTintColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16)))),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF19734F),
+          foregroundColor: Colors.white,
+          centerTitle: true,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF19734F),
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 14),
+          ),
+        ),
+        cardTheme: const CardThemeData(
+          color: Colors.white,
+          surfaceTintColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
+        ),
       ),
       initialRoute: "/",
       routes: {
@@ -30,13 +46,13 @@ class MyApp extends StatelessWidget {
         "/home": (context) => TelaHome(),
         "/perfil": (context) => TelaPerfil(),
         "/navbar": (context) => NavBar(),
-        "/login":(context) => TelaLogin(),
+        "/login": (context) => TelaLogin(),
       },
-      onGenerateRoute: (settings){
-        if(settings.name == "/gestao"){
-          if(statusAdmin != null && statusAdmin == true){
+      onGenerateRoute: (settings) {
+        if (settings.name == "/gestao") {
+          if (statusAdmin != null && statusAdmin == true) {
             return MaterialPageRoute(builder: (context) => TelaGestao());
-          }else{
+          } else {
             return MaterialPageRoute(builder: (context) => NavBar());
           }
         }
