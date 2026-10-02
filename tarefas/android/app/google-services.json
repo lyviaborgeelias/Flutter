@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "676814841958",
+    "project_id": "tarefasds20-777b9",
+    "storage_bucket": "tarefasds20-777b9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676814841958:android:6b52fc33e3cc1d1c3865a7",
+        "android_client_info": {
+          "package_name": "com.meuapp.tarefas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2xFUsjg7wr0SuMzNzwJUQjp_RkWzCAPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
