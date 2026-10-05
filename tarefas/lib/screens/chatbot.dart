@@ -21,9 +21,9 @@ class _ChatBotState extends State<ChatBot> {
       //Crio o modelo de IA
       dynamic modelo = FirebaseAI.googleAI().generativeModel(model: 'gemini-3.8-flash');
       //Crio um conteudo com base na mensagem digitada
-      dynamic resposta = modelo.generateContent([Content.text(mensagemDigitada.text)]);
+      dynamic resposta = await modelo.generateContent([Content.text(mensagemDigitada.text)]);
       setState(() {
-        conversa.add({"remetente":"gemini", "texto":resposta.toString()});
+        conversa.add({"remetente":"gemini", "texto":resposta.text});
       });
     } catch(e){ //Caso tenha erro, a resposta do gemini é o erro de referencia.
       conversa.add({"remetente":"gemini", "texto":"$e"});
